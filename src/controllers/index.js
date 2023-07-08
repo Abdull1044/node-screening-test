@@ -1,0 +1,1 @@
+module.exports.hotelConroller=require('./hotel.controller')
