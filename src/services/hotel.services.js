@@ -65,7 +65,7 @@ const findHotelBySlugOrId = async (slugOrId) => {
 
   const hotel = await Hotel.findOne(query);
   if (!hotel) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Hotel not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Failed to fetch found");
   }
   return hotel;
 };
