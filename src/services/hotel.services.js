@@ -29,9 +29,27 @@ const deleteHotel = async (_id) => {
   return await hotel.deleteOne();
 };
 
+const findHotelBySlugOrId = async (slugOrId) => {
+  const isObjectId = /^[0-9a-fA-F]{24}$/.test(slugOrId);
+  let query;
+
+  if (isObjectId) {
+    query = { _id: slugOrId };
+  } else {
+    query = { slug: slugOrId };
+  }
+
+  const hotel = await Hotel.findOne(query);
+  if (!hotel) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Hotel not found");
+  }
+  return hotel;
+};
+
 module.exports = {
   getAll,
   updateHotel,
   createHotel,
   deleteHotel,
+  findHotelBySlugOrId,
 };

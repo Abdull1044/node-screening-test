@@ -32,9 +32,17 @@ const deleteHotel = catchAsync(async (req, res) => {
   }).send(res);
 });
 
+const findHotelBySlugOrId = catchAsync(async (req, res) => {
+  const response = await hotelServices.findHotelBySlugOrId(req.params.id);
+  new ApiResponse(httpStatus.OK, httpStatus[httpStatus.OK], {
+    data: response,
+  }).send(res);
+});
+
 module.exports = {
   getAll,
   createHotel,
   updateHotel,
   deleteHotel,
+  findHotelBySlugOrId,
 };

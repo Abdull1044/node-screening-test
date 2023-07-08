@@ -9,6 +9,7 @@ router.route("/").post(hotelConroller.createHotel).get(hotelConroller.getAll);
 router
   .route("/:id")
   .put(hotelConroller.updateHotel)
-  .delete(hotelConroller.deleteHotel);
+  .delete(hotelConroller.deleteHotel)
+  .get(hotelConroller.findHotelBySlugOrId);
 
 module.exports = router;
