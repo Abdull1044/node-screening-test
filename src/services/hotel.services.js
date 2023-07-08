@@ -2,8 +2,32 @@ const httpStatus = require("http-status");
 const { Hotel } = require("../models");
 const ApiError = require("../utils/ApiError");
 
-const getAll = async () => {
-  return await Hotel.find({});
+const getAll = async (query) => {
+  const filters = {};
+  const sortOptions = {};
+
+  const filterParams = {
+    name: (value) => ({ name: { $regex: value, $options: "i" } }),
+    city: (value) => ({ city: value }),
+    price: (value) => {
+      const [minPrice, maxPrice] = value.split(":");
+      return { price: { $gte: Number(minPrice), $lte: Number(maxPrice) } };
+    },
+    date: (value) => {
+      const [startDate, endDate] = value.split(":");
+      return { date: { $gte: new Date(startDate), $lte: new Date(endDate) } };
+    },
+  };
+
+  Object.entries(filterParams).forEach(([key, filterFn]) => {
+    if (query[key]) {
+      Object.assign(filters, filterFn(query[key]));
+    }
+  });
+
+  const hotels = await Hotel.find(filters).sort(sortOptions);
+
+  return { hotels };
 };
 
 const createHotel = async (newHotel) => {
