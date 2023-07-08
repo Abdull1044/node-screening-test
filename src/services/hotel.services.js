@@ -1,34 +1,37 @@
 const httpStatus = require("http-status");
 const { Hotel } = require("../models");
+const ApiError = require("../utils/ApiError");
 
 const getAll = async () => {
   return await Hotel.find({});
 };
 
 const createHotel = async (newHotel) => {
-  console.log({ newHotel });
-  try {
-    const hotel = await Hotel.create(newHotel);
-    return hotel;
-  } catch (error) {
-    res.status(500).json({ error: "Failed to create a hotel" });
-  }
+  const hotel = await Hotel.create(newHotel);
+  return hotel;
 };
 
-const updateHotel = async (id, updatedHotel) => {
-  try {
-    const hotel = await Hotel.findByIdAndUpdate(id, updatedHotel, { new: true });
-    if(!hotel){
-        return "Hotel not found'"
-    }
-    return hotel;
-  } catch (error) {
-    res.status(500).json({ error: "Failed to update the hotel" });
+const updateHotel = async (_id, updatedHotel) => {
+  const hotel = await Hotel.findByIdAndUpdate(_id, updatedHotel, {
+    new: true,
+  });
+  if (!hotel) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Hotel not found");
   }
+  return await hotel.save();
+};
+
+const deleteHotel = async (_id) => {
+  const hotel = await Hotel.findById(_id);
+  if (!hotel) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Hotel not found");
+  }
+  return await hotel.deleteOne();
 };
 
 module.exports = {
+  getAll,
   updateHotel,
   createHotel,
-  getAll,
+  deleteHotel,
 };

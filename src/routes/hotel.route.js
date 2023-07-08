@@ -6,11 +6,9 @@ const router = express.Router();
 
 router.route("/").post(hotelConroller.createHotel).get(hotelConroller.getAll);
 
-router.route("/:id").put(hotelConroller.updateHotel);
+router
+  .route("/:id")
+  .put(hotelConroller.updateHotel)
+  .delete(hotelConroller.deleteHotel);
 
 module.exports = router;
-
-// router
-//     .route('/')
-//     .post(auth(), validate(userValidation.createUser), userController.createUser)
-//     .get(auth(), validate(userValidation.getUsers), userController.getUsers);

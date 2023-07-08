@@ -11,7 +11,6 @@ const getAll = catchAsync(async (req, res) => {
 });
 
 const createHotel = catchAsync(async (req, res) => {
-  console.log({req})
   const response = await hotelServices.createHotel(req.body);
   new ApiResponse(httpStatus.OK, httpStatus[httpStatus.OK], {
     data: response,
@@ -19,14 +18,23 @@ const createHotel = catchAsync(async (req, res) => {
 });
 
 const updateHotel = catchAsync(async (req, res) => {
-  const response = await hotelServices.createHotel(req.body);
+  const response = await hotelServices.updateHotel(req.params.id, req.body);
+  console.log({ response });
+  new ApiResponse(httpStatus.OK, httpStatus[httpStatus.OK], {
+    data: response,
+  }).send(res);
+});
+
+const deleteHotel = catchAsync(async (req, res) => {
+  const response = await hotelServices.deleteHotel(req.params.id);
   new ApiResponse(httpStatus.OK, httpStatus[httpStatus.OK], {
     data: response,
   }).send(res);
 });
 
 module.exports = {
-  createHotel,
   getAll,
+  createHotel,
   updateHotel,
+  deleteHotel,
 };
