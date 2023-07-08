@@ -5,15 +5,20 @@ require("dotenv").config();
 const logger = require("./logger");
 
 const connect = async () => {
-  mongoose.connect(process.env.MONGODB_URL).then(
-    (connection) => {
-      logger.info("Database connected");
-    },
-    (error) => {
-      logger.error(error);
-      throw new Error(`Database connection error: ${error.message}`);
-    }
-  );
+  mongoose
+    .connect(process.env.MONGODB_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    .then(
+      (connection) => {
+        logger.info("Database connected");
+      },
+      (error) => {
+        logger.error(error);
+        throw new Error(`Database connection error: ${error.message}`);
+      }
+    );
   mongoose.set("debug", (collectionName, methodName, ...methodArgs) => {
     const msgMapper = (msg) => {
       return util

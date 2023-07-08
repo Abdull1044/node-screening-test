@@ -17,19 +17,16 @@ app.use(morgan.errorHandler);
 // setup database
 database.connect();
 
+app.use(express.json());
+
+
+
 // setup cors
 cors(app);
 
 // api routes
+app.use(routes);
 
-app.use("/api", routes);
-// app._router.stack
-
-app._router.stack.forEach(function (r) {
-  if (r.route && r.route.path) {
-    console.log(r.route.path);
-  }
-});
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {

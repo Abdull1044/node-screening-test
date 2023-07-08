@@ -5,7 +5,7 @@ const router = express.Router();
 
 const defaultRoutes = [
   {
-    path: "/hotel",
+    path: "/hotels",
     route: hotelRouter,
   },
 ];

@@ -4,7 +4,9 @@ const { hotelConroller } = require("../controllers");
 
 const router = express.Router();
 
-router.route("").post(hotelConroller.testRoute);
+router.route("/").post(hotelConroller.createHotel).get(hotelConroller.getAll);
+
+router.route("/:id").put(hotelConroller.updateHotel);
 
 module.exports = router;
 
