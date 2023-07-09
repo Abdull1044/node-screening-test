@@ -8,7 +8,6 @@ const hotelSchema = new mongoose.Schema({
   city: {
     type: String,
     required: true,
-    default: "New York",
   },
   price: {
     type: Number,
