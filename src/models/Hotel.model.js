@@ -1,11 +1,27 @@
 const mongoose = require("mongoose");
 
 const hotelSchema = new mongoose.Schema({
-  name: String,
-  city: String,
-  price: Number,
-  date: Date,
-  slug: String,
+  name: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+    default: "New York",
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  date: {
+    type: Date,
+    required: true,
+  },
+  slug: {
+    type: String,
+    default: "ABC",
+  },
 });
 
 const Hotel = mongoose.model("Hotel", hotelSchema);
