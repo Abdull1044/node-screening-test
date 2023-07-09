@@ -12,7 +12,7 @@ const createHotel = {
     city: Joi.string().required(),
     price: Joi.number().integer().required(),
     date: Joi.date().required(),
-    slug: Joi.string().default("ABC"),
+    slug: Joi.string().required(),
   }),
 };
 

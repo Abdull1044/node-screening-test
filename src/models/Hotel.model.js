@@ -20,7 +20,8 @@ const hotelSchema = new mongoose.Schema({
   },
   slug: {
     type: String,
-    default: "ABC",
+    require: true,
+    unique: true,
   },
 });
 
